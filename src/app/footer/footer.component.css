@@ -1,0 +1,18 @@
+hr {
+  background-color: lightgray;
+  margin: 1rem 10%;
+}
+
+.col-md {
+  margin: 0 14%;
+  padding: 4px;
+  text-align: center;
+  border-radius: 5px;
+  border-color: lightslategray;
+  border-style: solid;
+  border-width: 3px;
+}
+
+.footer-text {
+  font-style: italic;
+}
