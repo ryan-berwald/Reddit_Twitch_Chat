@@ -1,1 +1,4 @@
-<p *ngFor="let comment of comments">{{ comment.data.body }}</p>
+<div *ngFor="let comment of comments">
+  <h4>{{ comment.data.author }}</h4>
+  <p >{{ comment.data.body }}</p>
+</div>

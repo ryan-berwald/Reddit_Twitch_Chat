@@ -6,16 +6,15 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ContentComponent } from './content/content.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { CommentsComponent } from './comments/comments.component';
-//import { CommentsComponent } from './comments/comment.component';
+import { CommentsComponent } from './comments/comments.component'
+
 
 @NgModule({
   declarations: [
     AppComponent,
     ContentComponent,
     NavbarComponent,
-    CommentsComponent,
-    //CommentsComponent
+    CommentsComponent
   ],
   imports: [
     BrowserModule,
