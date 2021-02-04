@@ -1,0 +1,15 @@
+.col-md {
+  margin: 10px;
+  min-height: 400px;
+  /* text-align: center; */
+}
+
+.row {
+  padding-top: 10px;
+}
+
+.col-title {
+  text-align: center;
+  font-weight: bold;
+  font-size: 14pt;
+}
