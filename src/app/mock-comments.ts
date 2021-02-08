@@ -1,4 +1,4 @@
-import { Comments } from './comments';
+import { Comments } from './interfaces/comments';
 
 export const COMMENTS: Comments[] = [
   {
