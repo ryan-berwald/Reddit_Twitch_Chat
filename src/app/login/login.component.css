@@ -1,0 +1,25 @@
+section {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  width: 250px;
+  display: block;
+  color: #fff;
+  padding: 12px;
+  border: 1px solid #fff;
+}
+
+label {
+  display: flex;
+  justify-content: center;
+}
+
+.button-login {
+  width: 100%;
+  border: 1px solid #fff;
+}
