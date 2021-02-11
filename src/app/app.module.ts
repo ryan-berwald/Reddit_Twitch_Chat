@@ -4,6 +4,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { ContentComponent } from './content/content.component';
@@ -24,6 +26,8 @@ import { CommentsComponent } from './comments/comments.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
+    CollapseModule.forRoot(),
+    FormsModule,
     HttpClientModule,
   ],
   providers: [],
