@@ -1,8 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { Auth } from '../interfaces/auth';
 import { CommentService } from '../services/comment.service';
 import { Comments } from '../interfaces/comments';
-import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-comments',
@@ -13,13 +12,10 @@ export class CommentsComponent implements OnInit {
   @Input()
   auth!: Auth;
   commentResponse: Comments[] = [];
-  constructor(
-    private commentService: CommentService,
-    private authService: AuthService
-  ) {}
+  constructor(private commentService: CommentService) {}
 
   ngOnInit(): void {
-    this.getComments();
+    this.commentResponse = this.getComments();
   }
 
   getComments(): Comments[] {

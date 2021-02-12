@@ -1,4 +1,5 @@
-<div *ngFor="let comments of commentResponse | async">
-  <h4>{{ comments.data.author }}</h4>
-  <p>{{ comments.data.body }}</p>
+<div>
+  <li *ngFor="let comments of commentResponse; index as i">
+    {{ comments.data.children[i].data.body }}
+  </li>
 </div>
