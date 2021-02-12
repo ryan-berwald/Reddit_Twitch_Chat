@@ -10,24 +10,25 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./comments.component.css'],
 })
 export class CommentsComponent implements OnInit {
-  @Input() auth: Auth | undefined;
-  comments: Comments[] | undefined;
+  @Input()
+  auth!: Auth;
+  commentResponse: Comments[] = [];
   constructor(
     private commentService: CommentService,
     private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    console.log('in comments');
-    console.log(this.auth); //data that is passed down from content.component.html using data binding and @input decorator
-    //shows undefined
+    this.getComments();
   }
 
-  getComments(): void {
+  getComments(): Comments[] {
     this.commentService
-      .getComments()
-      .subscribe((comments) => (this.comments = comments));
+      .getComments('43z4gp', this.auth.access_token, this.auth.scope)
+      .subscribe((comments) => {
+        this.commentResponse = comments;
+        console.log(this.commentResponse);
+      });
+    return this.commentResponse;
   }
-
-  //comments = this.data.data.children;
 }
