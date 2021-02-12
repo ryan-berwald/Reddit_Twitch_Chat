@@ -1,13 +1,19 @@
 <div class="row">
-  <div class="col-sm bg-dark text-light rounded pretty d-block">
-    <div class="col-title">One of three columns</div>
-    <app-comments [auth]="auth">Token: {{ auth }}</app-comments>
-  </div>
-  <div class="col-sm bg-dark text-light rounded pretty d-none d-md-block">
+  <div *ngIf="auth" class="col-sm bg-dark text-light rounded pretty d-block">
     <div class="col-title">One of three columns</div>
     <app-comments [auth]="auth"></app-comments>
   </div>
-  <div class="col-sm bg-dark text-light rounded pretty d-none d-lg-block">
+  <div
+    *ngIf="auth"
+    class="col-sm bg-dark text-light rounded pretty d-none d-md-block"
+  >
+    <div class="col-title">One of three columns</div>
+    <app-comments [auth]="auth"></app-comments>
+  </div>
+  <div
+    *ngIf="auth"
+    class="col-sm bg-dark text-light rounded pretty d-none d-lg-block"
+  >
     <div class="col-title">One of three columns</div>
     <app-comments [auth]="auth"></app-comments>
   </div>
