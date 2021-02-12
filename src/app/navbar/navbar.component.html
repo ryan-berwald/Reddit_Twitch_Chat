@@ -26,43 +26,37 @@
             >Home <span class="sr-only">(current)</span></a
           >
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <!-- <li class="nav-item dropdown" dropdown #dropdown="bs-dropdown"
-            [autoClose]="false"
-        >
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="navbarDropdown"
-            role="button"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-            dropdownToggle
-            aria-controls="navbarDropdownMenu"
-            (click)="changeDropCollapsed()"
-          >
-            Dropdown
-          </a>
-          <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown"
-               id="navbarDropdownMenu" *dropdownMenu [collapse]="dropCollapsed">
-            <a class="dropdown-item text-light" href="#">Action</a>
-            <a class="dropdown-item text-light" href="#">Another action</a>
-            <div class="dropdown-divider text-light"></div>
-            <a class="dropdown-item text-light" href="#">Something else here</a>
-          </div>
-        </li> -->
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
-        </li>
       </ul>
     </div>
-    <form class="form-inline my-2 my-lg-0">
+    <!-- <form class="form-inline my-2 my-lg-0">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
         Add Stream
       </button>
-    </form>
+    </form> -->
+    <button type="button" class="btn btn-primary" (click)="openModal(template)">
+      Add URL
+    </button>
+
+    <ng-template #template>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Modal</h4>
+        <button
+          type="button"
+          class="close pull-right"
+          aria-label="Close"
+          (click)="modalRef.hide()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="stuff">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="URL"
+          aria-label="URL"
+        />
+      </div>
+    </ng-template>
   </div>
 </nav>
