@@ -1,4 +1,5 @@
 <div>
+  {{userURL}}
   <li *ngFor="let comments of commentResponse; index as i">
     {{ comments.data.children[i].data.body }}
   </li>

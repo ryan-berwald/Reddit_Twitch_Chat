@@ -11,6 +11,8 @@ import { Comments } from '../interfaces/comments';
 export class CommentsComponent implements OnInit {
   @Input()
   auth!: Auth;
+  @Input() userURL!: string;
+  URL!:String;
   commentResponse: Comments[] = [];
   constructor(private commentService: CommentService) {}
 
