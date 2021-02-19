@@ -22,15 +22,14 @@
         class="form-control"
         placeholder="URL"
         aria-label="URL"
-        (keyup.enter)=([commentResponse])
-        
+        (keyup.enter)="onKey(userURLInput.value)"
         (keyup.enter)="modalRef.hide()"
-      />
+      /> 
       <br />
       <button
         type="button"
         class="btn btn-primary"
-        (click)="getComments(userURLInput.value)"
+        (click)="onKey(userURLInput.value)"
         (click)="modalRef.hide()"
       >
         Submit

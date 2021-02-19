@@ -13,11 +13,10 @@ import { Observable } from 'rxjs';
 export class CommentsComponent implements OnInit {
   @Input()
   auth!: Auth;
-  @Input() userURL!: string;
-  URL!: String;
   //finalComments: String[] = [];
-  commentResponse!: Observable<Comments[]>;
+  commentResponse!:Observable<Comments[]>;
   modalRef!: BsModalRef;
+  userURL = '';
   constructor(
     private commentService: CommentService,
     private modalService: BsModalService
@@ -25,24 +24,29 @@ export class CommentsComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  getComments(userUrl: string): Observable<Comments[]> {
-    let commentResponse: Comments[] = [];
+  getComments() {
+    //let commentResponse: Comments[] = [];
 
     this.auth.scope = 'read';
-    this.commentService
-      .getComments(userUrl, this.auth.access_token, this.auth.scope)
-      .subscribe((comments) => {
+    this.commentResponse =this.commentService
+      .getComments(this.userURL, this.auth.access_token, this.auth.scope);
+      /* .subscribe((comments) => {
         commentResponse = comments;
         console.log(commentResponse);
-      });
+      }) */;
     /*     for (let x = 0; x < commentResponse[0].data.children.length; x++) {
       this.finalComments.push(commentResponse[1].data.children[x].data.body);
     }
     return this.finalComments; */
-    return this.commentResponse;
+    
   }
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
+  }
+
+  onKey(value:string){
+    this.userURL = value;
+    this.getComments();
   }
 }
