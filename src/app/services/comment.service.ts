@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class CommentService {
-  //private apiURL = 'oauth.reddit.com';
+  private readonly apiURL = 'https://oauth.reddit.com';
 
   constructor(private http: HttpClient) {}
 
@@ -19,14 +19,14 @@ export class CommentService {
     let headers = {
       Authorization: 'bearer ' + accessToken,
       Accept: '*/*',
-      scope: 'read',
+      scope: tokenScope,
       device_id: 'DO_NOT_TRACK_THIS_DEVICE',
     };
-    return this.http.get<Comments[]>(
-      'https://oauth.reddit.com/r/wallstreetbets/comments/libwy6',
-      {
-        headers,
-      }
-    );
+
+    return this.http.get<Comments[]>(this.apiURL + urlExt, {
+      headers,
+    });
   }
 }
+
+//'https://oauth.reddit.com/r/wallstreetbets/comments/libwy6'

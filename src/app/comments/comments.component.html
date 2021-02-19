@@ -1,6 +1,45 @@
 <div>
-  {{userURL}}
-  <li *ngFor="let comments of commentResponse; index as i">
-    {{ comments.data.children[i].data.body }}
-  </li>
+  <button type="button" class="btn btn-primary" (click)="openModal(template)">
+    Add URL
+  </button>
+  <!-- Modal -->
+  <ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Add URL</h4>
+      <button
+        type="button"
+        class="close pull-right"
+        aria-label="Close"
+        (click)="modalRef.hide()"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" id="stuff">
+      <input
+        #userURLInput
+        type="text"
+        class="form-control"
+        placeholder="URL"
+        aria-label="URL"
+        (keyup.enter)=([commentResponse])
+        
+        (keyup.enter)="modalRef.hide()"
+      />
+      <br />
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="getComments(userURLInput.value)"
+        (click)="modalRef.hide()"
+      >
+        Submit
+      </button>
+    </div>
+  </ng-template>
+  <div *ngFor="let finalComments of commentResponse | async">
+    <li *ngFor="let comments of finalComments.data.children">
+      {{ comments.data.body }}
+    </li>
+  </div>
 </div>
