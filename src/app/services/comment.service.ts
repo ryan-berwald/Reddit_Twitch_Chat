@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
 import { Comments } from '../interfaces/comments';
 import { HttpClient } from '@angular/common/http';
 
@@ -11,11 +10,7 @@ export class CommentService {
 
   constructor(private http: HttpClient) {}
 
-  getComments(
-    urlExt: string,
-    accessToken: string,
-    tokenScope: string
-  ): Observable<Comments[]> {
+  getComments(urlExt: string, accessToken: string, tokenScope: string) {
     let headers = {
       Authorization: 'bearer ' + accessToken,
       Accept: '*/*',
