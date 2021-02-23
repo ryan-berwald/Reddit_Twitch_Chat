@@ -24,7 +24,7 @@
         aria-label="URL"
         (keyup.enter)="onKey(userURLInput.value)"
         (keyup.enter)="modalRef.hide()"
-      /> 
+      />
       <br />
       <button
         type="button"
@@ -36,9 +36,9 @@
       </button>
     </div>
   </ng-template>
-  <div *ngFor="let finalComments of $commentResponse | async">
+  <div *ngFor="let finalComments of commentStore.comments$ | async">
     <li *ngFor="let comments of finalComments.data.children">
-      <strong>{{comments.data.author}}</strong>
+      <strong>{{ comments.data.author }}</strong>
       {{ comments.data.body }}
     </li>
   </div>

@@ -10,7 +10,7 @@ import { CommentService } from '../services/comment.service';
 import { Comments } from '../interfaces/comments';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
-import { Observable } from 'rxjs';
+import { CommentsStoreService } from '../store/comments-store.service';
 
 @Component({
   selector: 'app-comments',
@@ -20,23 +20,25 @@ import { Observable } from 'rxjs';
 export class CommentsComponent implements OnInit, AfterContentChecked {
   @Input()
   auth!: Auth;
-  $commentResponse!: Observable<Comments[]>;
+  commentResponse!: Comments[];
   modalRef!: BsModalRef;
   userURL = '';
   constructor(
     private commentService: CommentService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    public commentStore: CommentsStoreService
   ) {}
 
   ngOnInit(): void {}
 
-  ngAfterContentChecked(): void {
-    console.log('run');
-    this.$commentResponse = this.commentService.getComments(
-      this.userURL,
-      this.auth.access_token,
-      this.auth.scope
-    );
+  ngAfterContentChecked() {
+    this.commentService
+      .getComments(this.userURL, this.auth.access_token, this.auth.scope)
+      .subscribe((comments) => {
+        this.commentResponse = comments;
+        this.commentStore.addComment(this.commentResponse);
+        console.log(this.commentResponse);
+      });
   }
 
   openModal(template: TemplateRef<any>) {
@@ -47,10 +49,13 @@ export class CommentsComponent implements OnInit, AfterContentChecked {
     this.userURL = value;
     this.auth.scope = 'read';
 
-    this.$commentResponse = this.commentService.getComments(
-      this.userURL,
-      this.auth.access_token,
-      this.auth.scope
-    );
+    this.commentService
+      .getComments(this.userURL, this.auth.access_token, this.auth.scope)
+      .subscribe((comments) => {
+        this.commentResponse = comments;
+        this.commentStore.addComment(this.commentResponse);
+        console.log(this.commentResponse);
+      });
+    //this.commentResponse[0].data.children[0].data.......
   }
 }
