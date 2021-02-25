@@ -1,9 +1,12 @@
 import {
-  AfterContentChecked,
   Component,
+  ComponentFactory,
+  ComponentFactoryResolver,
   Input,
   OnInit,
   TemplateRef,
+  ViewChild,
+  ViewContainerRef,
 } from '@angular/core';
 import { Auth } from '../interfaces/auth';
 import { CommentService } from '../services/comment.service';
@@ -18,7 +21,7 @@ import { interval, Subscription } from 'rxjs';
   templateUrl: './comments.component.html',
   styleUrls: ['./comments.component.css'],
 })
-export class CommentsComponent implements OnInit, AfterContentChecked {
+export class CommentsComponent implements OnInit {
   @Input()
   auth!: Auth;
   commentResponse!: Comments[];
@@ -30,31 +33,24 @@ export class CommentsComponent implements OnInit, AfterContentChecked {
   constructor(
     private commentService: CommentService,
     private modalService: BsModalService,
-    public commentStore: CommentsStoreService
+    public commentStore: CommentsStoreService,
+    private resolver: ComponentFactoryResolver
   ) {}
+
+  @ViewChild('ref', { read: ViewContainerRef }) container!: ViewContainerRef;
 
   ngOnInit(): void {
     this.updateSubscription = interval(15000).subscribe((val) => {
       console.log('15 seconds');
-      this.commentService
-        .getComments(this.userURL, this.auth.access_token, this.auth.scope)
-        .subscribe((comments) => {
-          console.log('adding comments');
-          this.commentStore.addComment(comments);
-        });
+      if (this.userURL) {
+        this.commentService
+          .getComments(this.userURL, this.auth.access_token, this.auth.scope)
+          .subscribe((comments) => {
+            console.log('adding comments');
+            this.commentStore.addComment(comments);
+          });
+      }
     });
-  }
-
-  ngAfterContentChecked() {
-    /*   this.commentService
-      .getComments(this.userURL, this.auth.access_token, this.auth.scope)
-      .subscribe((comments) => {
-        this.prevLength = comments.length;
-        if (comments > this.commentResponse) {
-          //this.commentResponse = comments;
-          this.commentStore.addComment(comments);
-        }
-      }); */
   }
 
   openModal(template: TemplateRef<any>) {
@@ -73,5 +69,12 @@ export class CommentsComponent implements OnInit, AfterContentChecked {
         this.commentStore.addComment(this.commentResponse);
       });
     //this.commentResponse[0].data.children[0].data.......
+  }
+
+  createComponent(comp: ViewContainerRef) {
+    this.container.clear();
+    const factory: ComponentFactory = this.resolver.resolveComponentFactory(
+      CommentsComponent
+    );
   }
 }
