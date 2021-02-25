@@ -23,11 +23,12 @@ export class CommentsStoreService {
 
   addComment(/*body: string, author: string, id: string*/ array: Comments[]) {
     // we assaign a new copy of comments by adding a new comment to it
-    if (array.length > this.comments.length) {
-      for (let x = this.comments.length; x < array.length; x++) {
-        this.comments.push(array[x]);
-      }
-    }
+    // if (array.length > this.comments.length) {
+    //   for (let x = this.comments.length; x < array.length; x++) {
+    //     this.comments = array;
+    //   }
+    // }
+    this.comments = array
   }
 
   /* removeComment(id: string) {

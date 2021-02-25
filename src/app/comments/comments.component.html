@@ -1,6 +1,7 @@
-<button type="button" class="btn btn-primary">New Sub</button>
+<button type="button" class="btn btn-primary" (click)="makeBuilder('paul', { 'author': 'bob', 'body': 'hey whats up' })">Make Builder</button>
 
-<div class="row" #ref>
+<div class="row" *ngFor="let thread of builderArray">
+  {{thread}}
   <div *ngIf="auth" class="col-sm bg-dark text-light rounded pretty d-block">
     <button type="button" class="btn btn-primary" (click)="openModal(template)">
       Add URL
@@ -39,11 +40,20 @@
         </button>
       </div>
     </ng-template>
-    <div *ngFor="let finalComments of commentStore.comments$ | async">
+
+    <!-- <div *ngFor="let finalComments of commentStore.comments$ | async">
       <li *ngFor="let comments of finalComments.data.children">
         <strong>{{ comments.data.author }}</strong>
         {{ comments.data.body }}
       </li>
+      <li *ngFor="let comments of finalComments.data.children">
+        <strong>{{ comments.data.author }}</strong>
+        {{ comments.data.body }}
+      </li>
+    </div> -->
+    <div *ngFor="let list of thread">
+      <p>{{list.author}}</p>
+      <p>{{list.comments}}</p>
     </div>
   </div>
 </div>
