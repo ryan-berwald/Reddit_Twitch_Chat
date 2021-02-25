@@ -9,7 +9,6 @@ import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { AppComponent } from './app.component';
-import { ContentComponent } from './content/content.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { CommentsComponent } from './comments/comments.component';
@@ -17,7 +16,6 @@ import { CommentsComponent } from './comments/comments.component';
 @NgModule({
   declarations: [
     AppComponent,
-    ContentComponent,
     NavbarComponent,
     FooterComponent,
     CommentsComponent,

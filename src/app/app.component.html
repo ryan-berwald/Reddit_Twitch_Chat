@@ -1,6 +1,8 @@
 <app-navbar></app-navbar>
 
 <div class="container-fluid">
-  <app-content></app-content>
+  <div *ngIf="auth">
+    <app-comments [auth]="auth"></app-comments>
+  </div>
   <app-footer></app-footer>
 </div>
