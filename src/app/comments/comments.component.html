@@ -1,45 +1,140 @@
-<div>
-  <button type="button" class="btn btn-primary" (click)="openModal(template)">
-    Add URL
-  </button>
-  <!-- Modal -->
-  <ng-template #template>
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">Add URL</h4>
-      <button
-        type="button"
-        class="close pull-right"
-        aria-label="Close"
-        (click)="modalRef.hide()"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
+<div class="row">
+  
+  <div *ngIf="auth" class="col-sm bg-dark text-light rounded pretty d-block">
+    <button type="button" class="btn btn-primary" (click)="openModal(template)">
+      Add URL
+    </button>
+    <!-- Modal -->
+    <ng-template #template>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add URL</h4>
+        <button
+          type="button"
+          class="close pull-right"
+          aria-label="Close"
+          (click)="modalRef.hide()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="stuff">
+        <input
+          #userURLInput
+          type="text"
+          class="form-control"
+          placeholder="URL"
+          aria-label="URL"
+          (keyup.enter)="onKey(userURLInput.value)"
+          (keyup.enter)="modalRef.hide()"
+        />
+        <br />
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="onKey(userURLInput.value)"
+          (click)="modalRef.hide()"
+        >
+          Submit
+        </button>
+      </div>
+    </ng-template>
+    <div *ngFor="let finalComments of commentStore.comments$ | async">
+      <li *ngFor="let comments of finalComments.data.children">
+        <strong>{{ comments.data.author }}</strong>
+        {{ comments.data.body }}
+      </li>
     </div>
-    <div class="modal-body" id="stuff">
-      <input
-        #userURLInput
-        type="text"
-        class="form-control"
-        placeholder="URL"
-        aria-label="URL"
-        (keyup.enter)="onKey(userURLInput.value)"
-        (keyup.enter)="modalRef.hide()"
-      />
-      <br />
-      <button
-        type="button"
-        class="btn btn-primary"
-        (click)="onKey(userURLInput.value)"
-        (click)="modalRef.hide()"
-      >
-        Submit
-      </button>
+  </div>
+
+  <div *ngIf="auth" class="col-sm bg-dark text-light rounded pretty d-block">
+    <button type="button" class="btn btn-primary" (click)="openModal(template)">
+      Add URL
+    </button>
+    <!-- Modal -->
+    <ng-template #template>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add URL</h4>
+        <button
+          type="button"
+          class="close pull-right"
+          aria-label="Close"
+          (click)="modalRef.hide()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="stuff">
+        <input
+          #userURLInput
+          type="text"
+          class="form-control"
+          placeholder="URL"
+          aria-label="URL"
+          (keyup.enter)="onKey(userURLInput.value)"
+          (keyup.enter)="modalRef.hide()"
+        />
+        <br />
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="onKey(userURLInput.value)"
+          (click)="modalRef.hide()"
+        >
+          Submit
+        </button>
+      </div>
+    </ng-template>
+    <div *ngFor="let finalComments of commentStore.comments$ | async">
+      <li *ngFor="let comments of finalComments.data.children">
+        <strong>{{ comments.data.author }}</strong>
+        {{ comments.data.body }}
+      </li>
     </div>
-  </ng-template>
-  <div *ngFor="let finalComments of commentStore.comments$ | async">
-    <li *ngFor="let comments of finalComments.data.children">
-      <strong>{{ comments.data.author }}</strong>
-      {{ comments.data.body }}
-    </li>
+  </div>
+
+  <div *ngIf="auth" class="col-sm bg-dark text-light rounded pretty d-block">
+    <button type="button" class="btn btn-primary" (click)="openModal(template)">
+      Add URL
+    </button>
+    <!-- Modal -->
+    <ng-template #template>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add URL</h4>
+        <button
+          type="button"
+          class="close pull-right"
+          aria-label="Close"
+          (click)="modalRef.hide()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="stuff">
+        <input
+          #userURLInput
+          type="text"
+          class="form-control"
+          placeholder="URL"
+          aria-label="URL"
+          (keyup.enter)="onKey(userURLInput.value)"
+          (keyup.enter)="modalRef.hide()"
+        />
+        <br />
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="onKey(userURLInput.value)"
+          (click)="modalRef.hide()"
+        >
+          Submit
+        </button>
+      </div>
+    </ng-template>
+    <div *ngFor="let finalComments of commentStore.comments$ | async">
+      <li *ngFor="let comments of finalComments.data.children">
+        <strong>{{ comments.data.author }}</strong>
+        {{ comments.data.body }}
+      </li>
+    </div>
   </div>
 </div>
