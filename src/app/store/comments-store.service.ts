@@ -20,10 +20,23 @@ export class CommentsStoreService {
   }
 
   addComment(userData: UserData) {
-    this.userData = [
-      ...this.userData,
-      { url: userData.url, comments: userData.comments },
-    ];
+    console.log(this.userData);
+    if (this.userData.length == 0) {
+      this.userData = [{ url: userData.url, comments: userData.comments }];
+    } else {
+      for (let x = 0; x < this.userData.length; x++) {
+        if (this.userData[x].url == userData.url) {
+          for (let i = 0; i < this.userData[x].comments.length; i++) {
+            if (this.userData[x].comments[i] == userData.comments[i]) {
+              this.userData[x].comments[i] = userData.comments[i];
+            }
+          }
+        } else {
+          //need to figure out how to add data without creating entirely new element
+          console.log('else');
+        }
+      }
+    }
     console.log('added comment: ' + this.userData);
   }
 

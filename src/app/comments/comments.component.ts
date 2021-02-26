@@ -30,20 +30,21 @@ export class CommentsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.updateSubscription = interval(15000).subscribe((val) => {
+    this.updateSubscription = interval(5000).subscribe((val) => {
       console.log('15 seconds');
       if (this.commentStore.userData.length > 0) {
         for (let x = 0; x < this.commentStore.userData.length; x++) {
-          this.commentService
-            .getComments(
-              this.commentStore.userData[x].url,
-              this.auth.access_token,
-              this.auth.scope
-            )
-            .subscribe((comments) => {
-              this.userData.comments = comments;
-              this.commentStore.addComment(this.userData);
-            });
+          if (this.commentStore.userData[x].url)
+            this.commentService
+              .getComments(
+                this.commentStore.userData[x].url,
+                this.auth.access_token,
+                this.auth.scope
+              )
+              .subscribe((comments) => {
+                this.userData.comments = comments;
+                this.commentStore.addComment(this.userData);
+              });
         }
       }
     });
