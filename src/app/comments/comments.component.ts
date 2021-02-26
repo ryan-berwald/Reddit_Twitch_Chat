@@ -1,13 +1,4 @@
-import {
-  Component,
-  ComponentFactory,
-  ComponentFactoryResolver,
-  Input,
-  OnInit,
-  TemplateRef,
-  ViewChild,
-  ViewContainerRef,
-} from '@angular/core';
+import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { Auth } from '../interfaces/auth';
 import { CommentService } from '../services/comment.service';
 import { Comments } from '../interfaces/comments';
@@ -15,6 +6,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 import { CommentsStoreService } from '../store/comments-store.service';
 import { interval, Subscription } from 'rxjs';
+import { UserData } from '../interfaces/user-data';
 
 @Component({
   selector: 'app-comments',
@@ -23,32 +15,36 @@ import { interval, Subscription } from 'rxjs';
 })
 export class CommentsComponent implements OnInit {
   @Input()
-  auth!: Auth;
-  commentResponse!: Comments[];
+  auth: Auth = { access_token: '', token_type: '', expires_in: 0, scope: '' };
+  @Input()
+  inputURL!: string;
   modalRef!: BsModalRef;
-  userURL = '';
-  prevLength!: number;
+  //userData!: Array<UserData>;
+  userData: UserData = { url: '', comments: [] };
   private updateSubscription!: Subscription;
 
   constructor(
     private commentService: CommentService,
     private modalService: BsModalService,
-    public commentStore: CommentsStoreService,
-    private resolver: ComponentFactoryResolver
+    public commentStore: CommentsStoreService
   ) {}
-
-  @ViewChild('ref', { read: ViewContainerRef }) container!: ViewContainerRef;
 
   ngOnInit(): void {
     this.updateSubscription = interval(15000).subscribe((val) => {
       console.log('15 seconds');
-      if (this.userURL) {
-        this.commentService
-          .getComments(this.userURL, this.auth.access_token, this.auth.scope)
-          .subscribe((comments) => {
-            console.log('adding comments');
-            this.commentStore.addComment(comments);
-          });
+      if (this.commentStore.userData.length > 0) {
+        for (let x = 0; x < this.commentStore.userData.length; x++) {
+          this.commentService
+            .getComments(
+              this.commentStore.userData[x].url,
+              this.auth.access_token,
+              this.auth.scope
+            )
+            .subscribe((comments) => {
+              this.userData.comments = comments;
+              this.commentStore.addComment(this.userData);
+            });
+        }
       }
     });
   }
@@ -58,23 +54,13 @@ export class CommentsComponent implements OnInit {
   }
 
   onKey(value: string) {
-    this.userURL = value;
-    this.auth.scope = 'read';
+    this.userData.url = value;
 
     this.commentService
-      .getComments(this.userURL, this.auth.access_token, this.auth.scope)
+      .getComments(this.userData.url, this.auth.access_token, this.auth.scope)
       .subscribe((comments) => {
-        this.commentResponse = comments;
-
-        this.commentStore.addComment(this.commentResponse);
+        this.userData.comments = comments;
+        this.commentStore.addComment(this.userData);
       });
-    //this.commentResponse[0].data.children[0].data.......
-  }
-
-  createComponent(comp: ViewContainerRef) {
-    this.container.clear();
-    const factory: ComponentFactory = this.resolver.resolveComponentFactory(
-      CommentsComponent
-    );
   }
 }

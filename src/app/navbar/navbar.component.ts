@@ -1,4 +1,10 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  TemplateRef,
+  EventEmitter,
+} from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -10,7 +16,7 @@ export class NavbarComponent implements OnInit {
   isCollapsed: boolean = true;
   dropCollapsed: boolean = true;
   modalRef!: BsModalRef;
-
+  @Output() event = new EventEmitter();
   constructor(private modalService: BsModalService) {}
 
   ngOnInit(): void {}
@@ -21,6 +27,10 @@ export class NavbarComponent implements OnInit {
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
+  }
+
+  onClick(value: string) {
+    this.event.emit(value);
   }
 
   changeDropCollapsed(): void {

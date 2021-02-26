@@ -36,10 +36,10 @@
     <button type="button" class="btn btn-primary" (click)="openModal(template)">
       Add URL
     </button>
-
+    <!-- Modal -->
     <ng-template #template>
       <div class="modal-header">
-        <h4 class="modal-title pull-left">Modal</h4>
+        <h4 class="modal-title pull-left">Add URL</h4>
         <button
           type="button"
           class="close pull-right"
@@ -51,11 +51,23 @@
       </div>
       <div class="modal-body" id="stuff">
         <input
+          #userURLInput
           type="text"
           class="form-control"
           placeholder="URL"
           aria-label="URL"
+          (keyup.enter)="modalRef.hide()"
+          (keyup.enter)="onClick(userURLInput.value)"
         />
+        <br />
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="modalRef.hide()"
+          (click)="onClick(userURLInput.value)"
+        >
+          Submit
+        </button>
       </div>
     </ng-template>
   </div>

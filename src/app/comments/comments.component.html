@@ -1,49 +1,17 @@
-<button type="button" class="btn btn-primary">New Sub</button>
-
-<div class="row" #ref>
-  <div *ngIf="auth" class="col-sm bg-dark text-light rounded pretty d-block">
-    <button type="button" class="btn btn-primary" (click)="openModal(template)">
-      Add URL
-    </button>
-    <!-- Modal -->
-    <ng-template #template>
-      <div class="modal-header">
-        <h4 class="modal-title pull-left">Add URL</h4>
-        <button
-          type="button"
-          class="close pull-right"
-          aria-label="Close"
-          (click)="modalRef.hide()"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
+<div class="row" *ngIf="auth">
+  <div
+    *ngFor="let item of commentStore.userData$ | async"
+    class="col-sm bg-dark text-light rounded pretty d-block"
+  >
+    <!-- This creates an element for every 'Userdata' element in the array, is currently creating an entirely new element 
+    instead of updating. TBH its probably an issue with the way the store got reconstructed but let me know if you see
+    something easy --Ryan
+   -->
+    <div *ngFor="let data of item.comments">
+      <div *ngFor="let comment of data.data.children">
+        <strong>{{ comment.data.author }}</strong
+        ><br />{{ comment.data.body }}
       </div>
-      <div class="modal-body" id="stuff">
-        <input
-          #userURLInput
-          type="text"
-          class="form-control"
-          placeholder="URL"
-          aria-label="URL"
-          (keyup.enter)="onKey(userURLInput.value)"
-          (keyup.enter)="modalRef.hide()"
-        />
-        <br />
-        <button
-          type="button"
-          class="btn btn-primary"
-          (click)="onKey(userURLInput.value)"
-          (click)="modalRef.hide()"
-        >
-          Submit
-        </button>
-      </div>
-    </ng-template>
-    <div *ngFor="let finalComments of commentStore.comments$ | async">
-      <li *ngFor="let comments of finalComments.data.children">
-        <strong>{{ comments.data.author }}</strong>
-        {{ comments.data.body }}
-      </li>
     </div>
   </div>
 </div>
