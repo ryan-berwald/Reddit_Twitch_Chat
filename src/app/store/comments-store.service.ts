@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { element } from 'protractor';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Comments } from '../interfaces/comments';
 import { UserData } from '../interfaces/user-data';
@@ -22,22 +23,23 @@ export class CommentsStoreService {
   addComment(userData: UserData) {
     console.log(this.userData);
     if (this.userData.length == 0) {
+      //if this is initial url, create index 0 of array
       this.userData = [{ url: userData.url, comments: userData.comments }];
     } else {
-      for (let x = 0; x < this.userData.length; x++) {
-        if (this.userData[x].url == userData.url) {
-          for (let i = 0; i < this.userData[x].comments.length; i++) {
-            if (this.userData[x].comments[i] == userData.comments[i]) {
-              this.userData[x].comments[i] = userData.comments[i];
-            }
-          }
-        } else {
-          //need to figure out how to add data without creating entirely new element
-          console.log('else');
-        }
+      //if url is in array at all, then filter out comments that aren't unique, append only new ones on end of array
+      if (this.userData.some((e) => e.url === userData.url)) {
+        let index = this.userData.findIndex((e) => e.url == userData.url);
+        this.userData[index].comments = this.userData[index].comments.filter(
+          (x, i) => x == this.userData[index].comments[i]
+        );
+      } else {
+        //else just add entirely new url and element on end
+        this.userData.push({
+          url: userData.url,
+          comments: userData.comments,
+        });
       }
     }
-    console.log('added comment: ' + this.userData);
   }
 
   removeComment(url: string) {
