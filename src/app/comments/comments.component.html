@@ -1,12 +1,8 @@
 <div class="row" *ngIf="auth">
   <div
     *ngFor="let item of commentStore.userData$ | async"
-    class="col-sm bg-dark text-light rounded pretty d-block"
+    class="col-sm-4 bg-dark text-light rounded pretty d-block"
   >
-    <!-- This creates an element for every 'Userdata' element in the array, is currently creating an entirely new element 
-    instead of updating. TBH its probably an issue with the way the store got reconstructed but let me know if you see
-    something easy --Ryan
-   -->
     <div *ngFor="let data of item.comments">
       <div *ngFor="let comment of data.data.children">
         <strong>{{ comment.data.author }}</strong
