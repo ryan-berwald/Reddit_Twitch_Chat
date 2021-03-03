@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Comments } from '../interfaces/comments';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +18,11 @@ export class CommentService {
       device_id: 'DO_NOT_TRACK_THIS_DEVICE',
     };
 
+    let params = new HttpParams().set('sort', 'new').set('limit', '25');
+
     return this.http.get<Comments[]>(this.apiURL + urlExt, {
-      headers,
+      headers: headers,
+      params: params,
     });
   }
 }

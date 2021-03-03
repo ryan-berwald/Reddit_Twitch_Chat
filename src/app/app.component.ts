@@ -10,9 +10,6 @@ import { Auth } from './interfaces/auth';
 export class AppComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
-  @Input()
-  url!: string;
-
   auth: Auth = { access_token: '', token_type: '', expires_in: 0, scope: '' };
   ngOnInit(): void {
     this.authService.getToken('read').subscribe((data) => {
@@ -21,8 +18,5 @@ export class AppComponent implements OnInit {
     });
   }
 
-  addItem(value: string) {
-    this.url = value;
-  }
   title = 'Reddit-Twitch-Chat';
 }

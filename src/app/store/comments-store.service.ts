@@ -21,17 +21,27 @@ export class CommentsStoreService {
   }
 
   addComment(userData: UserData) {
-    console.log(this.userData);
-    if (this.userData.length == 0) {
+    if (this.userData == undefined) {
       //if this is initial url, create index 0 of array
       this.userData = [{ url: userData.url, comments: userData.comments }];
     } else {
       //if url is in array at all, then filter out comments that aren't unique, append only new ones on end of array
       if (this.userData.some((e) => e.url === userData.url)) {
         let index = this.userData.findIndex((e) => e.url == userData.url);
-        this.userData[index].comments = this.userData[index].comments.filter(
-          (x, i) => x == this.userData[index].comments[i]
-        );
+
+        userData.comments[1].data.children.forEach((e) => {
+          if (
+            this.userData[index].comments[1].data.children.some(
+              (x) => x.data.body == e.data.body
+            )
+          ) {
+            console.log('duplicate');
+          } else {
+            this.userData[index].comments[1].data.children.push(e);
+          }
+        });
+
+        //this.userData = [...this.userData, userData];
       } else {
         //else just add entirely new url and element on end
         this.userData.push({

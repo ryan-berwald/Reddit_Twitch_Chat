@@ -1,6 +1,6 @@
-<app-navbar (event)="main.onKey($event)" (event)="addItem($event)"></app-navbar>
+<app-navbar (event)="main.onKey($event)"></app-navbar>
 
 <div class="container-fluid">
-  <app-comments #main [inputURL]="url" [auth]="auth"></app-comments>
+  <app-comments #main [auth]="auth"></app-comments>
   <app-footer></app-footer>
 </div>

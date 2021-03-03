@@ -16,10 +16,8 @@ import { UserData } from '../interfaces/user-data';
 export class CommentsComponent implements OnInit {
   @Input()
   auth: Auth = { access_token: '', token_type: '', expires_in: 0, scope: '' };
-  @Input()
-  inputURL!: string;
+  bigdata = new Array<UserData>();
   modalRef!: BsModalRef;
-  //userData!: Array<UserData>;
   userData: UserData = { url: '', comments: [] };
   private updateSubscription!: Subscription;
 
@@ -30,9 +28,9 @@ export class CommentsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.updateSubscription = interval(5000).subscribe((val) => {
+    this.updateSubscription = interval(15000).subscribe((val) => {
       console.log('15 seconds');
-      if (this.commentStore.userData.length > 0) {
+      if (this.commentStore.userData.length >= 0) {
         for (let x = 0; x < this.commentStore.userData.length; x++) {
           if (this.commentStore.userData[x].url)
             this.commentService
@@ -50,12 +48,15 @@ export class CommentsComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {}
+
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
 
   onKey(value: string) {
-    this.userData.url = value;
+    this.userData.url = value.substring(value.indexOf('/r/'));
+    console.log(this.userData.url);
 
     this.commentService
       .getComments(this.userData.url, this.auth.access_token, this.auth.scope)
