@@ -1,14 +1,19 @@
 import { Injectable } from '@angular/core';
-import { element } from 'protractor';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Comments } from '../interfaces/comments';
+import { Auth } from '../interfaces/auth';
 import { UserData } from '../interfaces/user-data';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CommentsStoreService {
-  constructor() {}
+  //private
+  auth!: Auth;
+  constructor(private authService: AuthService) {
+    this.auth = { access_token: '', token_type: '', expires_in: 0, scope: '' };
+  }
+
   private readonly _userData = new BehaviorSubject<UserData[]>([]);
   readonly userData$ = this._userData.asObservable();
 
@@ -18,6 +23,18 @@ export class CommentsStoreService {
 
   set userData(val: UserData[]) {
     this._userData.next(val);
+  }
+
+  getToken() {
+    this.authService
+      .getToken('read')
+      .toPromise()
+      .then((e) => {
+        this.auth.access_token = e.access_token;
+        this.auth.expires_in = e.expires_in;
+        this.auth.scope = e.scope;
+        this.auth.token_type = e.token_type;
+      });
   }
 
   addComment(userData: UserData) {

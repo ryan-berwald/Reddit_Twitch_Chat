@@ -32,6 +32,7 @@ export class CommentsComponent implements OnInit {
       console.log('15 seconds');
       if (this.commentStore.userData.length >= 0) {
         for (let x = 0; x < this.commentStore.userData.length; x++) {
+          console.log('updating: ' + this.commentStore.userData[x].url);
           if (this.commentStore.userData[x].url)
             this.commentService
               .getComments(
@@ -59,7 +60,11 @@ export class CommentsComponent implements OnInit {
     console.log(this.userData.url);
 
     this.commentService
-      .getComments(this.userData.url, this.auth.access_token, this.auth.scope)
+      .getComments(
+        this.userData.url,
+        this.commentStore.auth.access_token,
+        this.commentStore.auth.scope
+      )
       .subscribe((comments) => {
         this.userData.comments = comments;
         this.commentStore.addComment(this.userData);
