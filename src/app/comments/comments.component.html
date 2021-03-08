@@ -1,12 +1,20 @@
 <div class="row" *ngIf="auth">
   <div
-    *ngFor="let item of commentStore.userData$ | async"
+    *ngFor="let item of commentStore.userData$ | async; index as i"
     class="col-md bg-dark text-light rounded pretty d-block"
   >
+    <button
+      attr.id="{{ i }}"
+      type="button"
+      class="btn btn-primary"
+      (click)="removeUrl(i)"
+    >
+      X
+    </button>
     <div *ngFor="let data of item.comments">
       <div *ngFor="let comment of data.data.children">
-        <strong>{{ comment.data.author }}</strong
-        ><br />{{ comment.data.body }}
+        <strong>{{ comment.data.author }}</strong>
+        <br />{{ comment.data.body }}
       </div>
     </div>
   </div>

@@ -1,12 +1,12 @@
 import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { Auth } from '../interfaces/auth';
-import { CommentService } from '../services/comment.service';
 import { Comments } from '../interfaces/comments';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 import { CommentsStoreService } from '../store/comments-store.service';
 import { interval, Subscription } from 'rxjs';
 import { UserData } from '../interfaces/user-data';
+import { Event } from '@angular/router';
 
 @Component({
   selector: 'app-comments',
@@ -22,7 +22,6 @@ export class CommentsComponent implements OnInit {
   private updateSubscription!: Subscription;
 
   constructor(
-    private commentService: CommentService,
     private modalService: BsModalService,
     public commentStore: CommentsStoreService
   ) {}
@@ -34,7 +33,7 @@ export class CommentsComponent implements OnInit {
         for (let x = 0; x < this.commentStore.userData.length; x++) {
           console.log('updating: ' + this.commentStore.userData[x].url);
           if (this.commentStore.userData[x].url) {
-            this.commentStore.getComment(x); //can change to not need second param
+            this.commentStore.getComment(x);
           }
         }
       }
@@ -63,5 +62,9 @@ export class CommentsComponent implements OnInit {
     }
 
     this.commentStore.getComment(this.commentStore.userData.length - 1);
+  }
+
+  removeUrl(num: number) {
+    this.commentStore.removeUrl(num);
   }
 }

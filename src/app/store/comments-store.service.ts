@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Auth } from '../interfaces/auth';
@@ -83,10 +82,11 @@ export class CommentsStoreService {
     }
   }
 
-  removeComment(url: string) {
-    this.userData = this.userData.filter((comment) => comment.url !== url);
+  removeUrl(num: number) {
+    if (num == 0) {
+      this.userData.pop();
+    } else {
+      this.userData = this.userData.splice(num, 1);
+    }
   }
 }
-
-//"/r/wallstreetbets/comments/lxi05e/daily_discussion_thread_for_march_04_2021/"
-//"/r/wallstreetbets/comments/lxi05e/daily_discussion_thread_for_march_04_2021/"
