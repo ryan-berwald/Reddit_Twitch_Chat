@@ -33,17 +33,9 @@ export class CommentsComponent implements OnInit {
       if (this.commentStore.userData.length >= 0) {
         for (let x = 0; x < this.commentStore.userData.length; x++) {
           console.log('updating: ' + this.commentStore.userData[x].url);
-          if (this.commentStore.userData[x].url)
-            this.commentService
-              .getComments(
-                this.commentStore.userData[x].url,
-                this.auth.access_token,
-                this.auth.scope
-              )
-              .subscribe((comments) => {
-                this.userData.comments = comments;
-                this.commentStore.addComment(this.userData);
-              });
+          if (this.commentStore.userData[x].url) {
+            this.commentStore.getComment(x); //can change to not need second param
+          }
         }
       }
     });
@@ -56,18 +48,20 @@ export class CommentsComponent implements OnInit {
   }
 
   onKey(value: string) {
-    this.userData.url = value.substring(value.indexOf('/r/'));
-    console.log(this.userData.url);
-
-    this.commentService
-      .getComments(
-        this.userData.url,
-        this.commentStore.auth.access_token,
-        this.commentStore.auth.scope
-      )
-      .subscribe((comments) => {
-        this.userData.comments = comments;
-        this.commentStore.addComment(this.userData);
+    if (this.commentStore.userData.length == 0) {
+      this.commentStore.userData = [
+        {
+          url: value.substring(value.indexOf('/r/')),
+          comments: new Array<Comments>(),
+        },
+      ];
+    } else {
+      this.commentStore.userData.push({
+        url: value.substring(value.indexOf('/r/')),
+        comments: new Array<Comments>(),
       });
+    }
+
+    this.commentStore.getComment(this.commentStore.userData.length - 1);
   }
 }
